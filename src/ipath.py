@@ -1,9 +1,32 @@
 #!/usr/bin/env python 
 
-
 import requests
 
-def ipath_post(selection = '', default_opacity = 1, default_edge_width = 3, default_node_radius = 7, keep_colors = 0, default_color = '#cccccc', background_color = '#ffffff', whole_pathways = 0, whole_modules = 0, query_reactions = 0, tax_filter = 9606, metabolic_map = 'metabolic', export_type = 'SVG'):
+def make_ipath_selection(ids:list, colors:list, widths:None|int|list = None): 
+
+    if widths is None: 
+        widths = [10]*len(ids)
+    if widths is int:
+        widths = [widths]*len(ids)
+
+
+    ipath_selection = ''
+    for ipathID, color, width in zip(ids, colors, widths): 
+        ipath_selection += f'{ipathID} {color} W{width}\n'
+    
+    return ipath_selection
+    
+
+def ipath_post(selection = '', 
+               default_opacity = 1, 
+               default_edge_width = 3, 
+               default_node_radius = 7, 
+               keep_colors = 0, 
+               default_color = '#cccccc', 
+               background_color = '#ffffff', 
+               whole_pathways = 0, 
+               whole_modules = 0, 
+               query_reactions = 0, tax_filter = 9606, metabolic_map = 'metabolic', export_type = 'SVG'):
     """
     Posts input to [ipath3 server](https://pathways.embl.de/tools.cgi) (HTTPS:POST server: https://pathways.embl.de/mapping.cgi) and returns image with highlighted pathways.
     Keywords are the same as in the online version.  

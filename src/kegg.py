@@ -2,6 +2,8 @@
 
 import pandas as pd 
 import tqdm
+from typing import List
+
 
 def kegg_compounds(): 
     """ 
@@ -14,8 +16,10 @@ def kegg_compounds():
     """
     # Get compound list from https://rest.kegg.jp/list/compound
     df = pd.read_csv('https://rest.kegg.jp/list/compound', sep = '\t', names = ['id', 'name'])
+
     # ids are returned in the form cpd:ID (e.g. cpd:C00931). Remove leading cpd:
     df['id'] = df['id'].apply(lambda x: x.split(':')[1])
+    
     # Only store first name 
     df['name'] = df['name'].apply(lambda x: x.split(';')[0])
     
@@ -71,11 +75,9 @@ def kegg_batch_retrieval(molecular_formulas:List[str]):
     46  C21050           C6H12O6
     7   C00267           C6H12O6
     
-    """
-    from tqdm import tqdm
-    
+    """    
     df_list = []
-    for i, mol in zip(tqdm(range(len(molecular_formulas))), molecular_formulas): 
+    for mol in tqdm(molecular_formulas, total = len(molecular_formulas)): 
         df_list.append(keggID_from_molformula(mol)) 
 
     return pd.concat(df_list, axis=0)
