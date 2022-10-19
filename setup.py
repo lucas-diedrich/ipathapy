@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 with open('requirements.txt', 'r') as f:
     requirements = f.read().split('\n')
-    
+
 with open('README.md', 'r') as f:
     long_description = f.read()
 
@@ -15,7 +15,7 @@ setup(
     author = 'Lucas Diedrich', 
     author_email = 'lucas.diedrich@embl.de', 
     license = 'MIT',
-    packages=find_packages['ipathapy'],
+    packages=find_packages(['ipathapy']),
     include_package_data=True,
     install_requires=requirements,
 
