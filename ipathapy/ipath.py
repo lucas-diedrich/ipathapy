@@ -73,7 +73,7 @@ def make_ipath_selection(ids:List[str], colors:None|str|List[str] = None, sizes:
             return f'Saved in {save}'
     
 
-def ipath_post(selection = '', 
+def post(selection = '', 
                default_opacity = 1, 
                default_edge_width = 3, 
                default_node_radius = 7, 
