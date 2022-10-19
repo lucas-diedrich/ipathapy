@@ -128,9 +128,13 @@ ipath.ipath.make_ipath_selection(df_annotated['id'], df_annotated['colors'], sav
 
 ```
 
+### Manually 
+
+Upload file to [ipath3](https://pathways.embl.de/tools.cgi) in `Direct submission` and specify further parameters. 
+
 ## Resources 
 
-**[ipath3](ipath3)**
+**[ipath3](https://pathways.embl.de/)**
 
 [Darzi Y et al. (2018)](https://doi.org/10.1093/nar/gky299) Nucleic Acids Res. 46(W1): W510-W513 iPath3.0: interactive pathways explorer v3. 
 
