@@ -134,7 +134,8 @@ ipath.ipath.make_ipath_selection(df_annotated['id'], df_annotated['colors'], sav
 
 
 ```
-<img src="example-map.png" alt="drawing" width="400"/>
+![Image](example-map.png) 
+
 
 
 ### Manually 
