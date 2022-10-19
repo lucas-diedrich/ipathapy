@@ -47,9 +47,6 @@ def make_ipath_selection(ids:List[str], colors:None|str|List[str] = None, sizes:
 
     # Make main seleciton based on input lists 
     ipath_selection = ''
-    for ipathID, color, size in zip(ids, colors, sizes): 
-        ipath_selection += f'{ipathID} {color} W{size}\n'
-    
 
     if type(highlight) is list: 
         for item in highlight: 
@@ -63,6 +60,11 @@ def make_ipath_selection(ids:List[str], colors:None|str|List[str] = None, sizes:
                 size = 10
 
             ipath_selection += f'{ipathID} {color} W{size}\n'
+
+    
+    for ipathID, color, size in zip(ids, colors, sizes): 
+        ipath_selection += f'{ipathID} {color} W{size}\n'
+    
 
     # Return/save output
     if save is None: 
