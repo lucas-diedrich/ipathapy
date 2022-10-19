@@ -12,5 +12,6 @@ setup(
     author = 'Lucas Diedrich', 
     author_email = 'lucas.diedrich@embl.de', 
     license = 'MIT',
+    packages=['ipathapy'],
     zip_safe = False
 )
