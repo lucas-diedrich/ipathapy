@@ -2,12 +2,9 @@
 
 import pandas as pd 
 import scanpy as sc 
-from anndata import AnnData
-from typing import Union, Optional, Any, Mapping, Callable, NamedTuple, Generator, Tuple
-import copy
+import re 
 
-
-def rank_entity_groups(adata:AnnData, groupby, method = 'wilcoxon', use_raw = False, copy = False, **kwargs): 
+def rank_entity_groups(adata, groupby, method = 'wilcoxon', use_raw = False, copy = False, **kwargs) -> None: 
     """ 
     Ranks entities (e.g. metabolites) by the impact they have on the differentiation of a group from another. If
 
@@ -26,14 +23,14 @@ def rank_entity_groups(adata:AnnData, groupby, method = 'wilcoxon', use_raw = Fa
     kwargs
         Valid arguments of sc.tl.rank_gene_groups()
     """
-    if copy: copy.deepcopy(adata); else: sc.tl.rank_genes_groups(adata, groupby, method, use_raw, kwargs)
+    if copy: 
+        anndata = copy.deepcopy(adata) 
+        return  sc.tl.rank_genes_groups(anndata, groupby, method, use_raw, kwargs)
+    else: 
+        sc.tl.rank_genes_groups(adata, groupby, method, use_raw, kwargs)
     
 
-    
-
-
-
-def parse_ranked_genes(df:pd.DataFrame, pcutoff:None|float = None, changecutoff:None|float = None, ion_column:str = 'names', logchange_column:str = 'logfoldchanges', pval_column:str = 'pvals_adj'): 
+def parse_ranked_ions(df:pd.DataFrame, pcutoff:None|float = None, changecutoff:None|float = None, ion_column:str = 'names', molecular_formula_column:str = 'molecular_formula', adduct_column:str = 'adduct', logchange_column:str = 'logfoldchanges', pval_column:str = 'pvals_adj'): 
     """ 
     df (:class:`pd.DataFrame`)
         Dataframe which is supposed to be parsed
@@ -47,9 +44,7 @@ def parse_ranked_genes(df:pd.DataFrame, pcutoff:None|float = None, changecutoff:
         Name of column that contains logfold changes of metabolites (default: logfoldchanges) 
     pval_column (str)
         Name of column that contains p values of changes of metabolites (default: pvals_adj) 
-
-
-    
+   
     EXAMPLE
     -------
     >>> df
@@ -62,14 +57,30 @@ def parse_ranked_genes(df:pd.DataFrame, pcutoff:None|float = None, changecutoff:
     """
 
     # Extract molecular formulas 
-    df['molecular_formula'] = df[ion_column].str.extract('(.*)[\+|\-].*') 
+    df[molecular_formula_column] = df[ion_column].str.extract('(.*)[\+|\-].*') 
+    df[adduct_column] = df[ion_column].str.extract('.*[\+|\-](.*)') 
+
 
     if pcutoff is not None: 
         df = df.loc[df[pval_column] < pcutoff]
 
     if changecutoff is not None: 
-        df = df.loc[df[pval_column] > changecutoff]
+        df = df.loc[df[logchange_column] > changecutoff]
     
     return df 
 
 
+
+def ion_to_molformula(ion_formula:str) -> str:
+    """ 
+    Returns molecular formula from ion formulas of the form
+    MOLFORMULA[+/-]ION
+
+    EXAMPLE 
+    -------
+    >>> print(ion_to_molformula(C5H5N5-H))
+    ... C5H5N5
+
+    >>> df['molecular_formula'] = df['ion'].apply(lambda x: ion_to_molformula(x))
+    """
+    return re.findall('(.*)[\+|\-].*', ion_formula)[0]

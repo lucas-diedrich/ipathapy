@@ -2,7 +2,13 @@
 
 import requests
 
-def make_ipath_selection(ids:list, colors:list, widths:None|int|list = None): 
+def make_ipath_selection(ids:list, colors:None|str|list = None, widths:None|int|list = None, save:None|str = None): 
+
+    if colors is None: 
+        colors = ['#FF0000']*len(ids)
+    if colors is str:
+        colors = [colors]*len(ids)
+
 
     if widths is None: 
         widths = [10]*len(ids)
@@ -14,7 +20,11 @@ def make_ipath_selection(ids:list, colors:list, widths:None|int|list = None):
     for ipathID, color, width in zip(ids, colors, widths): 
         ipath_selection += f'{ipathID} {color} W{width}\n'
     
-    return ipath_selection
+    if save is None: 
+        return ipath_selection
+    else: 
+        with open(save, 'w') as f: 
+            f.write(ipath_selection)
     
 
 def ipath_post(selection = '', 
@@ -26,7 +36,7 @@ def ipath_post(selection = '',
                background_color = '#ffffff', 
                whole_pathways = 0, 
                whole_modules = 0, 
-               query_reactions = 0, tax_filter = 9606, metabolic_map = 'metabolic', export_type = 'SVG'):
+               query_reactions = 0, tax_filter = 9606, metabolic_map = 'metabolic', export_type = 'SVG') -> bytes:
     """
     Posts input to [ipath3 server](https://pathways.embl.de/tools.cgi) (HTTPS:POST server: https://pathways.embl.de/mapping.cgi) and returns image with highlighted pathways.
     Keywords are the same as in the online version.  
@@ -87,3 +97,11 @@ def ipath_post(selection = '',
     #     raise ValueError('Bad Request')
 
     return ipath3_request.content
+
+
+
+def calculate_coverage(): 
+    """ 
+    Calculates the fraction of KEGG IDs corresponding to a specific molecular formula that were actually found in a metabolic map. 
+    """
+    pass 

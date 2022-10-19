@@ -1,0 +1,8 @@
+pandas 
+setuptools 
+requests
+tqdm
+typing 
+scanpy 
+re 
+-e .
