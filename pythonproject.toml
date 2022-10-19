@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "pathapy"
@@ -8,7 +8,7 @@ version = "0.0.1"
 authors = [
   { name="Lucas Diedrich", email="lucas.diedrich@embl.de" },
 ]
-description = "A python package to create input files for ipath3"
+description = "A python package to create metabolic maps with ipath3"
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
