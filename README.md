@@ -21,10 +21,10 @@ ipathpy supports you in creating these maps by
 
 ## Installation 
 
-With pypi: 
+With pypi in your favourite python environment: 
 
 ```bash 
-    pip install git+https://github.com/annorerio/ipathapy.git
+    pip install -e git+https://github.com/annorerio/ipathapy.git
 ```
 
 ## Example 
