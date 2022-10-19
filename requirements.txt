@@ -1,7 +1,6 @@
-pandas 
-setuptools 
+setuptools
+pandas  
 requests
 tqdm
 typing 
-scanpy 
-re 
+scanpy
