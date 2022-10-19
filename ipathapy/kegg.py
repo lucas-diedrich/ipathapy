@@ -82,20 +82,6 @@ def batch_retrieval(molecular_formulas:List[str],  molecular_formula_column = 'm
 
     return pd.concat(df_list, axis=0).reset_index(drop = True)
 
-
-# def get_names(df:pd.DataFrame, id_column = 'id'):   
-#     """ 
-#     Gets compound names from KEGG and associates them with molecular formula.
-
-#     EXAMPLE
-#     ------- 
-#     >>> molformulas = ['H2O', 'C6H12O6', 'C6H8O7']
-#     >>> df = kegg_batch_retrieval(molformulas)
-#     >>> get_names(df, 'id')
-#     """
-#     keggCompounds = all_compounds()
-#     return pd.merge(df, keggCompounds, on = id_column, how = 'left')
-
 def calculate_redundancy(df:pd.DataFrame, molecular_formula_column:str = 'molecular_formula'): 
     """ 
     Calculates number of molecules with same molecular formula. 
