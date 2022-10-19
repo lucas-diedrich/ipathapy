@@ -26,6 +26,8 @@ def convert_to_rgb(val, colors, maxval = 1, minval = 0):
         r, g, b = r1 + f*(r2-r1), g1+f*(g2-g1), b1+f*(b2-b1)
         return [int(r), int(g), int(b)]
 
+
+
 def color(df, column, colors, normalization = None, colortype = 'HEX') -> list: 
     """ 
     """
@@ -38,9 +40,8 @@ def color(df, column, colors, normalization = None, colortype = 'HEX') -> list:
     if normalization == 'log': 
         values = np.log(values)
 
-    if re.match('quantil\d*', normalization): 
+    if re.match('quantil\d*', str(normalization)): 
         nrQuantils = int(re.findall('quantil(\d*)', normalization)[0])
-
         quantils = [numerator/nrQuantils for numerator in range(nrQuantils)]
         perc = np.quantile(values, quantils)
         values = pd.Series(np.digitize(values, perc))

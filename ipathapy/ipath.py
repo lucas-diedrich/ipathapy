@@ -1,8 +1,9 @@
 #!/usr/bin/env python 
 
 import requests
+from typing import List 
 
-def make_ipath_selection(ids:list, colors:None|str|list = None, widths:None|int|list = None, save:None|str = None): 
+def make_ipath_selection(ids:list, colors:None|str|list = None, widths:None|int|List[int] = None, save:None|str = None): 
 
     if colors is None: 
         colors = ['#FF0000']*len(ids)
@@ -12,7 +13,7 @@ def make_ipath_selection(ids:list, colors:None|str|list = None, widths:None|int|
 
     if widths is None: 
         widths = [10]*len(ids)
-    if widths is int:
+    if type(widths) is int:
         widths = [widths]*len(ids)
 
 
@@ -25,6 +26,7 @@ def make_ipath_selection(ids:list, colors:None|str|list = None, widths:None|int|
     else: 
         with open(save, 'w') as f: 
             f.write(ipath_selection)
+            return f'Saved in {save}'
     
 
 def ipath_post(selection = '', 
