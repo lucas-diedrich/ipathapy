@@ -19,6 +19,13 @@ ipathpy supports you in creating these maps by
 - Versatile coloring + size adjustment to encode quantitive changes/values associated with a KEGG entitiy (`ipathapy.layout`)
 - Formatting in ipath3 format + direct access to ipath3 via POST method (*Due to deactivation of POST Access by ipath3 not applicable*) (`ipathapy.ipath`)
 
+## Installation 
+
+With pypi: 
+
+```bash 
+    pip install git+https://github.com/annorerio/ipathapy.git
+```
 
 ## Example 
 
