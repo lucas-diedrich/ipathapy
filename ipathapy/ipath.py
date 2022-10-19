@@ -3,24 +3,53 @@
 import requests
 from typing import List 
 
-def make_ipath_selection(ids:list, colors:None|str|list = None, widths:None|int|List[int] = None, save:None|str = None): 
+def make_ipath_selection(ids:List[str], colors:None|str|List[str] = None, sizes:None|int|List[int] = None, save:None|str = None, highlight:None|dict = None): 
+    """ 
+    Returns input for ipath3 for a number of ids. Coloring and widths can be specified. Specific nodes or pathways can be highlighted in the keyword highlight.  
 
+    INPUT
+    ----- 
+
+    ids (List[str]):
+        List of KEGG IDs that are supposed to be highlighted in the map
+    colors (None|str|List[int]):
+        Colors of the highlighted ids. Valid color formats are HEX (#XXXXXX), RGB (RGB(XXX, YYY, ZZZ)) and CYMK. If None, everything is highlighted red, if str, the respective color is used for all ids. 
+        If list, every id is colored according to the specified color. 
+    sizes (None|int|List[int]): 
+        Size of highlighted ids (px). If None, everything is set to size 10px, if int, the respective size is used for all ids. 
+        If list, every id is set to the respective size. 
+
+    
+    """
+    # Set defaults 
     if colors is None: 
         colors = ['#FF0000']*len(ids)
-    if colors is str:
+    if type(colors) is str:
         colors = [colors]*len(ids)
+    if type(colors) is list and len(colors) != len(ids): 
+        raise ValueError('Colors must have same length as ids')
+
+    if sizes is None: 
+        sizes = [10]*len(ids)
+    if type(sizes) is int:
+        sizes = [sizes]*len(ids)
+    if type(sizes) is list and len(sizes) != len(ids): 
+        raise ValueError('Sizes must have same length as ids')
 
 
-    if widths is None: 
-        widths = [10]*len(ids)
-    if type(widths) is int:
-        widths = [widths]*len(ids)
 
-
+    # Make main seleciton based on input lists 
     ipath_selection = ''
-    for ipathID, color, width in zip(ids, colors, widths): 
-        ipath_selection += f'{ipathID} {color} W{width}\n'
+    for ipathID, color, size in zip(ids, colors, sizes): 
+        ipath_selection += f'{ipathID} {color} W{size}\n'
     
+
+    if type(highlight) is dict: 
+        for item in highlight: 
+            ipathID, color, width = item.get('id'), item.get('color'), item.get('width')
+            ipath_selection += f'{ipathID} {color} W{width}\n'
+
+    # Return/save output
     if save is None: 
         return ipath_selection
     else: 
