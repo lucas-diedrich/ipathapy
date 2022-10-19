@@ -3,7 +3,7 @@
 import requests
 from typing import List 
 
-def make_ipath_selection(ids:List[str], colors:None|str|List[str] = None, sizes:None|int|List[int] = None, save:None|str = None, highlight:None|dict = None): 
+def make_ipath_selection(ids:List[str], colors:None|str|List[str] = None, sizes:None|int|List[int] = None, highlight:None|List[dict] = None, save:None|str = None): 
     """ 
     Returns input for ipath3 for a number of ids. Coloring and widths can be specified. Specific nodes or pathways can be highlighted in the keyword highlight.  
 
@@ -18,6 +18,13 @@ def make_ipath_selection(ids:List[str], colors:None|str|List[str] = None, sizes:
     sizes (None|int|List[int]): 
         Size of highlighted ids (px). If None, everything is set to size 10px, if int, the respective size is used for all ids. 
         If list, every id is set to the respective size. 
+    highlight (None|Dict): 
+        Highlight specific KEGG IDs in map (e.g. pathways) in json-format [{keggID: <KEGG ID>, color:<color>, width:<width>}]
+        Glycolysis: 00010 (hsa00010)
+        TCA cycle: 00020
+        Pentose Phosphate Pathway: 00030 (hsa00030)
+        Fatty acid degradation: 00061
+        Fatty acid degradation: 00071
 
     
     """
@@ -44,10 +51,18 @@ def make_ipath_selection(ids:List[str], colors:None|str|List[str] = None, sizes:
         ipath_selection += f'{ipathID} {color} W{size}\n'
     
 
-    if type(highlight) is dict: 
+    if type(highlight) is list: 
         for item in highlight: 
-            ipathID, color, width = item.get('id'), item.get('color'), item.get('width')
-            ipath_selection += f'{ipathID} {color} W{width}\n'
+            ipathID, color, size = item.get('keggID'), item.get('color'), item.get('size')
+
+            if ipathID is None: 
+                raise ValueError('All ids must be defined')
+            if color is None: 
+                color = '#cccccc'
+            if size is None: 
+                size = 10
+
+            ipath_selection += f'{ipathID} {color} W{size}\n'
 
     # Return/save output
     if save is None: 
