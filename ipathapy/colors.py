@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np 
 import re
+from typing import List
 
 def convert_to_rgb(val, colors, maxval = 1, minval = 0): 
     """
