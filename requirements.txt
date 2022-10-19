@@ -5,4 +5,3 @@ tqdm
 typing 
 scanpy 
 re 
--e .
