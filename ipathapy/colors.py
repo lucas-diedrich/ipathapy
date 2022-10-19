@@ -76,6 +76,53 @@ def color(df:pd.DataFrame, column:str, colors:List[tuple], normalization = None,
     
     else: return [f'#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}' for rgb in color_list_rgb]
 
+
+def size(df:pd.DataFrame, column:str, minsize:int = 2, maxsize:int = 20, normalization = None) -> list: 
+    """ 
+    Returns list of sizes on a linear color scale from size_min to size_max
+
+    INPUT
+    ----- 
+    df (`class`:pd.DataFrame)
+        Pandas DataFrame that contains a column whose values should be colorcoded
+    column (str)
+        Name of column 
+    size_min (int)
+        Minimal size in px
+    size_max (int)
+        Maximal size in px
+    normalization (str, {zscore, log, quantilXX})
+        Normalization procedure 
+        zscore: Normalizes according to z-score of values 
+        .. math::
+            Z = (X_i - < X >) / \sigma(X)
+        log: Normalizes according to log of values
+        quantilXX: Normalizes according to quantils of values were XX quantils are considered. 
+        E.g. quantil2 classifies values into 0 (50%) and 1 (50%)
+    """
+    import re 
+    values = df[column]
+
+
+    if normalization == 'zscore': 
+        values = (values - values.mean())/values.std()
+    
+    if normalization == 'log': 
+        values = np.log(values)
+
+    if re.match('quantil\d*', str(normalization)): 
+        nrQuantils = int(re.findall('quantil(\d*)', normalization)[0])
+        quantils = [numerator/nrQuantils for numerator in range(nrQuantils)]
+        perc = np.quantile(values, quantils)
+        values = pd.Series(np.digitize(values, perc))
+
+
+    minval, maxval = values.min(), values.max()
+
+    fractions = [(val - minval)/(maxval - minval) for val in values]
+    sizes = [int(fraction*(maxsize-minsize) + minsize) for fraction in fractions]
+    
+    return sizes 
     
 
     
