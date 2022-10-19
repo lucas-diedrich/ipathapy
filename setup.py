@@ -11,6 +11,6 @@ setup(
     long_description=long_description,
     author = 'Lucas Diedrich', 
     author_email = 'lucas.diedrich@embl.de', 
-    license = 'MIT'
+    license = 'MIT',
     zip_safe = False
 )
