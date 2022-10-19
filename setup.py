@@ -15,7 +15,6 @@ setup(
     author = 'Lucas Diedrich', 
     author_email = 'lucas.diedrich@embl.de', 
     license = 'MIT',
-    packages=find_packages(['ipathapy']),
     include_package_data=True,
     install_requires=requirements,
 
