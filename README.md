@@ -135,7 +135,10 @@ highlights = [
     ]
 
 
-ipath.ipath.make_ipath_selection(df_annotated['id'], df_annotated['colors'], save = 'ipath_input.txt', highlight = highlights)
+ipath.ipath.make_ipath_selection(df_annotated['id'], 
+                                df_annotated['colors'], 
+                                save = 'ipath_input.txt', 
+                                highlight = highlights)
 
 
 ```
