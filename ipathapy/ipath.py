@@ -145,11 +145,3 @@ def post(selection = '',
     #     raise ValueError('Bad Request')
 
     return ipath3_request.content
-
-
-
-def calculate_coverage(): 
-    """ 
-    Calculates the fraction of KEGG IDs corresponding to a specific molecular formula that were actually found in a metabolic map. 
-    """
-    pass 
