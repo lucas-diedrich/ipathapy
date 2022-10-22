@@ -37,7 +37,8 @@ import ipathapy as ipath
 import pandas as pd 
 
 df = pd.DataFrame(
-    {'ions': {0: 'C5H5N5-H', 1: 'C6H12O6-H', 2: 'C4H6O4-H'},
+    {
+    'ions': {0: 'C5H5N5-H', 1: 'C6H12O6-H', 2: 'C4H6O4-H'},
     'scores': {0: 3.7321227, 1: 26.354689, 2: -1.7803773},
     'logfoldchanges': {0: 0.3070414, 1: 0.51227486, 2: -6.6116753},
     'pvals': {0: 0.0001898730023755, 1: 4.535010108462715e-153, 2: 0.075014248841717},
@@ -88,7 +89,8 @@ df_annotated['id'].isna().sum()/df_annotated.shape[0]
 colors = ipath.layout.color(df_annotated, 
                             column = 'pvals_adj', 
                             colors = [(255,0,0), (0,0,255)], 
-                            normalization=None)
+                            normalization=None
+                            )
 df_annotated['colors'] = colors 
 
 # You can change the size of the entities
@@ -96,7 +98,8 @@ sizes = ipath.layout.size(df_annotated,
                           column = 'logfoldchanges',
                           minsize = 2, 
                           maxsize = 10, 
-                          normalization=None)
+                          normalization=None
+                          )
 df_annotated['sizes'] = sizes
  
 ```
