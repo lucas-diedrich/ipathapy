@@ -1,5 +1,6 @@
 setuptools
 pandas  
+numpy
 requests
 tqdm
 typing 
