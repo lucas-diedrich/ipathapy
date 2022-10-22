@@ -46,7 +46,7 @@ df = pd.DataFrame(
     )
 
 # filter for only significantly enriched metabolites + add molecular formula
-# The ion C4H6O4-H is removed, becaus it does not meet the p-value cutoff criteria 
+# The ion C4H6O4-H is removed, because it does not meet the p-value cutoff criteria 
 df = ipath.preprocess.parse_ranked_ions(df, 
                                         pcutoff = 1e-3,
                                         changecutoff = 0,  # Only show enriched metabolites 
