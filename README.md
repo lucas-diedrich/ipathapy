@@ -104,7 +104,7 @@ df_annotated['sizes'] = sizes
  
 ```
 
-### ipath
+### iPath
 
 ```python 
 # Generate simple input for ipath3
