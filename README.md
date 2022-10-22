@@ -1,7 +1,7 @@
 # ipathapy
 A package to create metabolic pathmaps with ipath3
 
-## What is it? 
+## About
 
 **ipathapy** provides an easy access to [ipath3](https://pathways.embl.de/) that allows users to highlight metabolites, genes or pathways in a metabolic network. 
 ipathpy supports you in creating these maps by 
@@ -15,7 +15,7 @@ ipathpy supports you in creating these maps by
 ## Main features 
 
 - Standard filtering of data (`ipathapy.preprocessing`)
-- API-retrieval of molecular formulas from KEGG, including batch retrieval (`ipatapy.kegg`)
+- API-retrieval KEGG IDs with molecular formulas or names, including batch retrieval (`ipathapy.kegg`)
 - Versatile coloring + size adjustment to encode quantitive changes/values associated with a KEGG entitiy (`ipathapy.layout`)
 - Formatting in ipath3 format + direct access to ipath3 via POST method (*Due to deactivation of POST Access by ipath3 not applicable*) (`ipathapy.ipath`)
 
@@ -26,6 +26,8 @@ With pypi in your favourite python environment:
 ```bash 
     pip install -e git+https://github.com/annorerio/ipathapy.git
 ```
+
+Requirements (will be installed during installation): numpy, pandas, requests, tqdm, scanpy
 
 ## Example 
 
@@ -58,7 +60,7 @@ df = ipath.preprocess.parse_ranked_ions(df,
 ### KEGG annotation 
 
 ```python
-# Easy example, starting from here
+# Simple example, starting from here
 molformulas = [
     'C5H5N5', # Adenine and others 
     'C6H12O6', # Hexoses
