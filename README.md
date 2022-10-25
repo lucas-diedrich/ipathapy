@@ -24,7 +24,7 @@ ipathpy supports you in creating these maps by
 With pypi in your favourite python environment: 
 
 ```bash 
-    pip install -e git+https://github.com/annorerio/ipathapy.git
+    pip install -e git+https://github.com/annorerio/ipathapy.git#egg=ipathapy
 ```
 
 Requirements (will be installed during installation): numpy, pandas, requests, tqdm, scanpy
