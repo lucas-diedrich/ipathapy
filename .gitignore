@@ -2,3 +2,4 @@ ipathapy-test.ipynb
 path-visualization.ipynb
 data/*
 */__pycache__
+*.svg
