@@ -29,17 +29,15 @@ def convert_to_rgb(val, colors, maxval = 1, minval = 0):
 
 
 
-def color(df:pd.DataFrame, column:str, colors:List[tuple], normalization = None, colortype = 'HEX') -> list: 
+def color(values:List[float], colors:List[tuple], normalization = None, colortype = 'HEX') -> list: 
     """ 
     Returns list of colors on a linear color scale of argument `colors` according to values in `column` of the dataframe `df`. 
     Different normalization methods are applicable. Colors can be returned 
 
     INPUT
     ----- 
-    df (`class`:pd.DataFrame)
-        Pandas DataFrame that contains a column whose values should be colorcoded
-    column (str)
-        Name of column 
+    value (list)
+        Values according to which the color is supposed to be changed
     colors (`List[tuple]`)
         List of tuples of colors in RGB format (no HEX support yet)
     normalization (str, {zscore, log, quantilXX})
@@ -52,8 +50,6 @@ def color(df:pd.DataFrame, column:str, colors:List[tuple], normalization = None,
         quantilXX: Normalizes according to quantils of values were XX quantils are considered. 
         E.g. quantil2 classifies values into 0 (50%) and 1 (50%)
     """
-    values = df[column]
-
 
     if normalization == 'zscore': 
         values = (values - values.mean())/values.std()
@@ -77,16 +73,14 @@ def color(df:pd.DataFrame, column:str, colors:List[tuple], normalization = None,
     else: return [f'#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}' for rgb in color_list_rgb]
 
 
-def size(df:pd.DataFrame, column:str, minsize:int = 2, maxsize:int = 20, normalization = None) -> list: 
+def size(values:List[float], minsize:int = 2, maxsize:int = 20, normalization = None) -> list: 
     """ 
     Returns list of sizes on a linear color scale from size_min to size_max
 
     INPUT
     ----- 
-    df (`class`:pd.DataFrame)
-        Pandas DataFrame that contains a column whose values should be colorcoded
-    column (str)
-        Name of column 
+    value (list)
+        Values according to which the size is supposed to be adjusted
     size_min (int)
         Minimal size in px
     size_max (int)
@@ -101,8 +95,6 @@ def size(df:pd.DataFrame, column:str, minsize:int = 2, maxsize:int = 20, normali
         E.g. quantil2 classifies values into 0 (50%) and 1 (50%)
     """
     import re 
-    values = df[column]
-
 
     if normalization == 'zscore': 
         values = (values - values.mean())/values.std()
