@@ -5,7 +5,7 @@ from tqdm import tqdm
 from typing import List
 
 
-def all_compounds(): 
+def all_compounds(n=1): 
     """ 
     Gets IDs of all KEGG compounds with their name 
 
@@ -21,7 +21,7 @@ def all_compounds():
     df['id'] = df['id'].apply(lambda x: x.split(':')[1])
     
     # Only store first name
-    df['name'] = df['name'].apply(lambda x: x.split(';')[0])
+    df['name'] = df['name'].apply(lambda x: ','.join(x.split(';')[:n]))
     
     return df 
 
@@ -90,13 +90,13 @@ def calculate_redundancy(df:pd.DataFrame, molecular_formula_column:str = 'molecu
     return df.merge(counts, on = molecular_formula_column)  
     
 
-def annotate_data(df:pd.DataFrame, molecular_formula_column = 'molecular_formula'): 
+def annotate_data(df:pd.DataFrame, molecular_formula_column = 'molecular_formula', n=1): 
     """ 
     Returns fully annotated dataframe. This function concatenates the functions `kegg.batch_retrieval`, `kegg.all_compounds` with some basic pandas functionalities for convenience. 
     """
     molecular_formulas = df[molecular_formula_column].to_list()
     df_keggIDs = batch_retrieval(molecular_formulas)
-    df_all_compounds = all_compounds()
+    df_all_compounds = all_compounds(n)
 
     df_annotation = pd.merge(df_keggIDs, df_all_compounds, how = 'left', on = 'id')
 
